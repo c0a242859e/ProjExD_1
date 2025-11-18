@@ -26,21 +26,36 @@ def main():
         screen.blit(bg_img2, [-x+1600, 0]) #練習7,8
         screen.blit(bg_img, [-x+3200, 0]) #練習9
 
+
         #練習10
         key_lst = pg.key.get_pressed()
+
+        # 演習1-2（move_ipを1回にまとめる）
+        vx, vy = 0, 0  # ← 追加：移動量をここにまとめる
+
         if key_lst[pg.K_UP]:
-            kk_rct.move_ip((0, -1))
+            vy = -1  # ← 元の動きを移植
 
         if key_lst[pg.K_DOWN]:
-            kk_rct.move_ip((0, +1))
+            vy = +1  # ← 元の動きを移植
 
         if key_lst[pg.K_LEFT]:
-            kk_rct.move_ip((-1, 0))
+            vx = -1  # ← 元の動きを移植
 
         if key_lst[pg.K_RIGHT]:
-            kk_rct.move_ip((+1, 0))
+            vx = +1  # ← 元の動きを移植
+
+        #演習1-1（背景）
+        flow_speed = 1
+        if not key_lst[pg.K_RIGHT]:
+            vx -= flow_speed
+
+        # move_ip を 1回だけ呼ぶ
+        kk_rct.move_ip(vx, vy)
+
 
         screen.blit(kk_img, kk_rct) #練習4,10
+
         pg.display.update()
         tmr += 1        
         clock.tick(200) #練習6
